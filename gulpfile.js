@@ -101,7 +101,7 @@ gulp.task('server:build',
         )
 
 gulp.task('package', () => {
-  return exec(['./build/staging/server.js', '--target', 'node8-linux-armv7', '--out-path', './target/'])
+  return exec(['./build/staging/server.js', '--debug', '--target', 'node8-linux-armv7', '--out-path', './target/'])
 })
 
 gulp.task('default', gulp.series('clean', gulp.parallel('client:build', 'server:build'), 'package'))
