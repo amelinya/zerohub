@@ -7,7 +7,6 @@ var buffer = require('vinyl-buffer')
 const browserify = require('browserify')
 const exorcist = require('exorcist')
 const sorcery = require('sorcery')
-const {exec} = require('pkg')
 const del = require('del')
 
 gulp.task('clean', () => {
@@ -51,7 +50,12 @@ gulp.task('client:uglify', () => {
 gulp.task('client:tracesources', () => {
   var chain = sorcery.loadSync('./build/client/uglify/app.js')
   chain.apply()
-  return chain.write('./build/client/resolved/client.js')
+  return chain.write('./build/client/resolved/app.js')
+})
+
+gulp.task('client:copyassets', () => {
+  return gulp.src(['!./src/client/**/*.js', './src/client/**/*'])
+        .pipe(gulp.dest('./build/staging/client/'))
 })
 
 gulp.task('client:build',
@@ -60,9 +64,10 @@ gulp.task('client:build',
             'client:bundle',
             'client:uglify',
             'client:tracesources',
+            'client:copyassets',
             () => {
               return gulp.src('./build/client/resolved/*')
-                    .pipe(gulp.dest('./build/staging/'))
+                    .pipe(gulp.dest('./build/staging/client/'))
             }
           )
         )
@@ -71,37 +76,22 @@ gulp.task('client:build',
 
 gulp.task('server:transpile', () => {
   return gulp.src(['./src/server/**/*.js'])
+        .pipe(sourcemaps.init())
         .pipe(babel({
           presets: ['env']
         }))
+        .pipe(sourcemaps.write('.', {sourceRoot: __dirname}))
         .pipe(gulp.dest('./build/server/transpile/'))
-})
-
-gulp.task('server:bundle', () => {
-  var b = browserify({
-    entries: './build/server/transpile/index.js',
-    debug: true
-  })
-
-  return b.bundle()
-        .pipe(source('server.js'))
-        .pipe(buffer())
-        .pipe(gulp.dest('./build/server/bundle/'))
 })
 
 gulp.task('server:build',
           gulp.series(
             'server:transpile',
-            'server:bundle',
             () => {
-              return gulp.src('./build/server/bundle/server.js')
-                    .pipe(gulp.dest('./build/staging/'))
+              return gulp.src('./build/server/transpile/*')
+                    .pipe(gulp.dest('./build/staging/server/'))
             }
           )
         )
 
-gulp.task('package', () => {
-  return exec(['./build/staging/server.js', '--debug', '--target', 'node8-linux-armv7', '--out-path', './target/'])
-})
-
-gulp.task('default', gulp.series('clean', gulp.parallel('client:build', 'server:build'), 'package'))
+gulp.task('default', gulp.series('clean', gulp.parallel('client:build', 'server:build')))

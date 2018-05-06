@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    html, body, #app {
+      height: 100%;
+      margin: 0;
+    }
+    .noJS {
+      display: flex;
+      height: 100%;
+
+      justify-content: center;
+      align-items: center;
+    }
+    .noJS > span {
+      display: inline-block;
+      padding: 3px;
+      border: 1px #333 solid;
+      border-radius: 5px;
+
+      font-family: sans-serif;
+      font-size: 25;
+      color: '#333';
+    }
+  </style>
+</head>
+<body>
+  <div id='app'>
+    <div class='noJS'><span>Please enable JavaScript to use this tool.</span></div>
+  </div>
+  <script src='./app.js'></script>
+</body>
+</html>
