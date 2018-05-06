@@ -4,7 +4,7 @@ node_js:
 script: gulp
 
 before_deploy:
-  - git tag "$($TRAVIS_COMMIT)"
+  - git tag $TRAVIS_COMMIT
 deploy:
   provider: releases
   api_key:
