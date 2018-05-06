@@ -1,0 +1,29 @@
+{
+  "name": "pihub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "fela": "^6.1.7",
+    "fela-dom": "^7.0.7",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-react-require": "^3.0.0",
+    "babel-preset-env": "^1.6.1",
+    "browserify": "^16.2.0",
+    "del": "^3.0.0",
+    "exorcist": "^1.0.1",
+    "gulp": "4.0.0",
+    "gulp-babel": "^7.0.1",
+    "gulp-if": "^2.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "pkg": "^4.2.3",
+    "sorcery": "^0.10.0",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
