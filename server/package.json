@@ -1,0 +1,7 @@
+{
+  "name": "zerohub-server",
+  "bin": "index.js",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

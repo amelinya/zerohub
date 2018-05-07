@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- '8'
+script: gulp make
+
+before_deploy:
+  - git tag "release_${TRAVIS_COMMIT}"
+deploy:
+  provider: releases
+  api_key:
+    secure: Z/BQago1P2eKucK8OJPjSHtzYGCQX3iGgZVsRcBkZtHha6TNsFCrF0RAxTT+jI39CtNsEKYaCbCAx+QTTg2G2Z001z1b+ijFDQRiXVBg6B5Ddje2zSiZnfsF/HsG3LqA1ix4w8rvXv3E5HXSkb4FttcpSIcFSUfoyjS9xsnyE4u4aad8cm5gsNNMdiRNhisTnZJGrdvSNvRhKr1l1S/qwmATKFWftcGhX7LETCBK6tUu0/t5YPfsNtdEMBoWL/QbsVQgljCQrheVYQMI7ez2OesVzWYTt8Bdemc5ILUBy4rqhNaDc3ub5dnKMoWXXgXqZXEdfm270V/3/fYpfPVOXSx0ZTGbmoDItq0OZsIC2DLUPDsxHyXJvSR+70mrawJCYtMW0k/WolxttNRO5dBnsjNqmDpL0UXeX+wxOkH+XcFfPpDIghab5YfGyQJX2cd/IQzPPBTPssW7ZWQv8nkra/yzfSEuKlDLhdC3YBiYz3460m1H8HcP6VREKXfH/nVbHkuvRB8lXmxfEU38wgd53YckHeVmPZwN/HFZLtX75XktpQtiCZxF+6MsC64DjCL6/aLx8qdFZGAaAbukThYTQW7OiO5H1oX11KHx+7kYU/43daQ7K90i6lm7I1GnO1aFfxxJCuaJpo4x/Q9BBUmIYGs18W4F4KNt7ezuNNfqIxc=
+  file: target/*
+  skip_cleanup: true
+  on:
+    repo: amelinya/zerohub
