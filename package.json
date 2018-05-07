@@ -16,7 +16,7 @@
     "gulp-install": "^1.1.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
-    "pkg": "szaffarano/pkg",
+    "pkg": "https://github.com/szaffarano/pkg.git",
     "sorcery": "^0.10.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
