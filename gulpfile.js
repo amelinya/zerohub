@@ -92,15 +92,44 @@ gulp.task('webclient:stage',
 
 /** SERVER **/
 
-gulp.task('server:stage', () => {
-  return gulp.src('./server/**/*')
-        .pipe(gulp.dest('./staging'))
+gulp.task('server:copy', () => {
+  return gulp.src('./**/*')
+        .pipe(gulp.dest('./build'))
 })
+
+gulp.task('server:copyassets', () => {
+  return gulp.src(['./build/**/*', '!./build/**/*.js'])
+        .pipe(gulp.dest('../staging'))
+})
+
+gulp.task('server:transpile', () => {
+  return gulp.src(['./build/**/*.js'])
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+          presets: ['env']
+        }))
+        .pipe(sourcemaps.write('.', {sourceRoot: process.cwd()}))
+        .pipe(gulp.dest('../staging/'))
+})
+
+gulp.task('server:clean', () => {
+  return del(['./build'])
+})
+
+gulp.task('server:stage',
+          gulp.series(
+            chdir('./server/'),
+            'server:copy',
+            gulp.parallel('server:transpile', 'server:copyassets'),
+            'server:clean',
+            chdir('..')
+          )
+        )
 
 /** APP **/
 
-gulp.task('app:package', () => {
-  return exec(['./package.json', '--target', 'node8-linux-armv7'])
+gulp.task('app:package', (d) => {
+  d()
 })
 
 gulp.task('app:build',
@@ -112,4 +141,4 @@ gulp.task('app:build',
           )
         )
 
-gulp.task('make', gulp.series('webclient:stage', 'server:stage', 'app:build'))
+gulp.task('make', gulp.series('server:stage', 'webclient:stage', 'app:build'))
