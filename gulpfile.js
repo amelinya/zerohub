@@ -128,8 +128,8 @@ gulp.task('server:stage',
 
 /** APP **/
 
-gulp.task('app:package', (d) => {
-  d()
+gulp.task('app:package', () => {
+  return exec(['./package.json', '--target', 'node8-linux-armv7', '--no-bytecode', '--permissive'])
 })
 
 gulp.task('app:build',
